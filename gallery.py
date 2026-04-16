@@ -77,10 +77,8 @@ def list_images_in_folder(folder_id):
         
         images = []
         for f in results.get('files', []):
-            # 取得縮圖 URL（替換 size 參數取得更大縮圖）
+            # 取得縮圖 URL（保持原始大小，lh3 URL 的 =s220 是穩定的）
             thumbnail = f.get('thumbnailLink', '')
-            if thumbnail:
-                thumbnail = thumbnail.replace('=s220', '=s500')
             
             images.append({
                 'id': f['id'],
