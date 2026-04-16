@@ -114,14 +114,12 @@ fi
 git add -A
 git commit -m "Auto update: $(date +%Y-%m-%d)"
 
-# 取得 GitHub token
-GITHUB_TOKEN=$(grep -o 'ghp_[^"]*' .git/config | head -1 || echo "")
-if [ -n "$GITHUB_TOKEN" ]; then
-    git push https://x-access-token:${GITHUB_TOKEN}@github.com/tree25857-xi/datahub.git main 2>&1
+# 直接使用 git push（remote origin 已設定好 token）
+git push 2>&1
+if [ $? -eq 0 ]; then
     echo "✅ 已推送到 GitHub"
 else
-    git push 2>&1
-    echo "✅ 已推送（請確認已設定 remote token）"
+    echo "⚠️ Push 失敗，請檢查網路或 token"
 fi
 
 echo "[$(date)] DataHub 更新完成！"
