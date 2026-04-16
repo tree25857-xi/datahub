@@ -2,9 +2,14 @@
 """把 gallery.json 嵌入到 index.html，同時轉換為直接連結"""
 
 import json
+import os
+
+# 取得腳本所在目錄
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # 讀取 gallery.json
-with open('gallery.json', 'r') as f:
+gallery_path = os.path.join(SCRIPT_DIR, 'gallery.json')
+with open(gallery_path, 'r', encoding='utf-8') as f:
     gallery_data = json.load(f)
 
 # 轉換 Google Drive 連結為直接下載連結
@@ -18,7 +23,8 @@ for date_obj in gallery_data['dates']:
             img['direct_url'] = url
 
 # 讀取 index.html
-with open('index.html', 'r') as f:
+html_path = os.path.join(SCRIPT_DIR, 'index.html')
+with open(html_path, 'r', encoding='utf-8') as f:
     content = f.read()
 
 # 1. 替換 let galleryData = { dates: [] }; 這一行
@@ -53,7 +59,7 @@ if func_start != -1:
     content = content[:func_start] + new_func + content[func_end:]
 
 # 寫回
-with open('index.html', 'w') as f:
+with open(html_path, 'w', encoding='utf-8') as f:
     f.write(content)
 
 print(f"✅ gallery.json 已嵌入 HTML（包含 direct_url）")
