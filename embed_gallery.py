@@ -44,8 +44,10 @@ old1 = 'let galleryData = { dates: [] };'
 new1 = f'let galleryData = {json.dumps(gallery_data, ensure_ascii=False, indent=8)};'
 content = content.replace(old1, new1, 1)
 
-# 2. 替換整個 async function loadGalleryData() 區塊
+# 2. 替換整個 async function loadGalleryData() 區塊（也處理非 async 版本）
 func_start = content.find('async function loadGalleryData()')
+if func_start == -1:
+    func_start = content.find('function loadGalleryData()')
 if func_start != -1:
     # 找到函數結束位置（計算括號深度）
     depth = 0
