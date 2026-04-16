@@ -63,7 +63,6 @@ if func_start != -1:
     
     # 新函數
     new_func = '''function loadGalleryData() {
-            galleryData = JSON.parse(JSON.stringify(GALLERY_DATA));
             populateDateSelector();
             document.getElementById('update-time').textContent = new Date().toLocaleString('zh-TW');
         }'''
