@@ -27,9 +27,9 @@ html_path = os.path.join(SCRIPT_DIR, 'index.html')
 with open(html_path, 'r', encoding='utf-8') as f:
     content = f.read()
 
-# 1. 替換 let galleryData = { dates: [] }; 這一行
+# 1. 替換 let galleryData = { dates: [] }; 為 const GALLERY_DATA = ...
 old1 = 'let galleryData = { dates: [] };'
-new1 = f'let galleryData = {json.dumps(gallery_data, ensure_ascii=False, indent=8)};'
+new1 = f'const GALLERY_DATA = {json.dumps(gallery_data, ensure_ascii=False, indent=8)};'
 content = content.replace(old1, new1, 1)
 
 # 2. 替換整個 async function loadGalleryData() 區塊
