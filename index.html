@@ -1,153 +1,320 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>🌙 DataHub - 曦曦的資料視覺化中心</title>
+    <meta name="description" content="曦曦的資料視覺化中心：整合 Looker Studio、新聞雷達、曦曦圖庫">
     <style>
         :root {
-            --bg-primary: #0f0f23;
-            --bg-secondary: #1a1a3e;
-            --bg-card: #16213e;
-            --text-primary: #e2e8f0;
-            --text-muted: #94a3b8;
-            --accent-blue: #3b82f6;
-            --accent-gold: #f59e0b;
-            --border: #334155;
+            --bg: #020617;
+            --bg-elevated: #0f172a;
+            --bg-accent: #111827;
+            --border-subtle: #1f2937;
+            --text-main: #e5e7eb;
+            --text-muted: #9ca3af;
+            --primary: #22d3ee;
+            --primary-soft: rgba(34, 211, 238, 0.15);
+            --accent: #6366f1;
+            --radius-lg: 16px;
+            --radius-md: 10px;
+            --radius-pill: 999px;
+            --shadow-card: 0 18px 40px rgba(15, 23, 42, 0.9);
+            --transition-normal: 180ms ease-out;
+            --nav-height: 64px;
+            --max-width: 1120px;
+            --font-main: system-ui, -apple-system, "Noto Sans TC", "Segoe UI", sans-serif;
         }
-        
-        * {
+
+        * { box-sizing: border-box; }
+
+        html, body {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', -apple-system, sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
+            background: radial-gradient(circle at top left, #0f172a 0, #020617 45%, #000 100%);
+            color: var(--text-main);
+            font-family: var(--font-main);
+            scroll-behavior: smooth;
             min-height: 100vh;
-            line-height: 1.6;
         }
-        
-        .container {
-            max-width: 1200px;
+
+        .site-shell { min-height: 100vh; }
+
+        /* ====== Header ====== */
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            backdrop-filter: blur(16px);
+            background: linear-gradient(to bottom, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.65), transparent);
+            border-bottom: 1px solid rgba(31, 41, 55, 0.9);
+        }
+
+        .nav-inner {
+            max-width: var(--max-width);
             margin: 0 auto;
-            padding: 20px;
+            padding: 8px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
         }
-        
-        /* Header */
-        header {
-            text-align: center;
-            padding: 40px 20px;
-            border-bottom: 1px solid var(--border);
-            margin-bottom: 40px;
-        }
-        
-        header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
-        
-        header p {
-            color: var(--text-muted);
-            font-size: 1.1em;
-        }
-        
-        .last-update {
-            margin-top: 10px;
-            font-size: 0.9em;
-            color: var(--accent-gold);
-        }
-        
-        /* Section */
-        .section {
-            background: var(--bg-secondary);
-            border-radius: 16px;
-            padding: 25px;
-            margin-bottom: 30px;
-            border: 1px solid var(--border);
-        }
-        
-        .section-title {
-            font-size: 1.4em;
-            margin-bottom: 20px;
+
+        .brand {
             display: flex;
             align-items: center;
             gap: 10px;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 15px;
         }
-        
-        /* Cards Grid */
+
+        .brand-mark {
+            width: 32px;
+            height: 32px;
+            border-radius: 40%;
+            background: conic-gradient(from 180deg, #22d3ee, #6366f1, #22c55e, #22d3ee);
+            position: relative;
+            box-shadow: 0 0 40px rgba(34, 211, 238, 0.55);
+            overflow: hidden;
+        }
+
+        .brand-mark::after {
+            content: "";
+            position: absolute;
+            inset: 3px;
+            border-radius: 40%;
+            background: radial-gradient(circle at 20% 0%, #0f172a 0, #020617 45%, #000 100%);
+        }
+
+        .brand-text-main {
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            font-size: 15px;
+        }
+
+        .brand-text-sub {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .last-update {
+            font-size: 11px;
+            color: var(--primary);
+        }
+
+        /* ====== Main ====== */
+        main { flex: 1; }
+
+        .page-container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 32px 20px 56px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            padding: 16px 20px;
+            background: radial-gradient(circle at top left, #020617 0, #020617 45%, #020617 100%);
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(31, 41, 55, 0.95);
+            box-shadow: var(--shadow-card);
+            backdrop-filter: blur(12px);
+        }
+
+        .section + .section { margin-top: 14px; }
+
+        .section-header {
+            margin-bottom: 16px;
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title-tag {
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 999px;
+            background: rgba(15, 23, 42, 0.9);
+            color: var(--primary);
+            border: 1px solid rgba(34, 211, 238, 0.6);
+        }
+
+        /* ====== Hero ====== */
+        .hero {
+            display: grid;
+            grid-template-columns: minmax(0, 3fr) minmax(0, 2.4fr);
+            gap: 20px;
+            align-items: center;
+        }
+
+        .hero-title {
+            font-size: 26px;
+            line-height: 1.25;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            margin-bottom: 10px;
+        }
+
+        .hero-subtitle {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .hero-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 11px;
+            border: 1px solid rgba(55, 65, 81, 0.95);
+            background: radial-gradient(circle at top, rgba(15, 23, 42, 0.95), #020617);
+            color: var(--text-muted);
+        }
+
+        .badge-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--primary);
+            box-shadow: 0 0 10px rgba(34, 211, 238, 0.65);
+        }
+
+        /* ====== Hero Panel ====== */
+        .hero-panel {
+            position: relative;
+            border-radius: 22px;
+            padding: 18px 16px 16px;
+            background: radial-gradient(circle at top left, #0f172a 0, #020617 55%, #000 100%);
+            border: 1px solid rgba(55, 65, 81, 0.95);
+            box-shadow: 0 25px 50px rgba(15, 23, 42, 1);
+            overflow: hidden;
+        }
+
+        .hero-panel::before {
+            content: "";
+            position: absolute;
+            inset: -40%;
+            background: radial-gradient(circle at top, rgba(34, 211, 238, 0.12), transparent 60%),
+                        radial-gradient(circle at 20% 30%, rgba(99, 102, 241, 0.18), transparent 65%),
+                        radial-gradient(circle at 80% 40%, rgba(34, 197, 94, 0.18), transparent 60%);
+            opacity: 0.8;
+            pointer-events: none;
+            mix-blend-mode: screen;
+        }
+
+        .hero-panel-inner { position: relative; z-index: 1; }
+
+        .hero-pill {
+            font-size: 11px;
+            padding: 3px 9px;
+            border-radius: 999px;
+            color: var(--primary);
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(34, 211, 238, 0.7);
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .hero-pill-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #22c55e, #22d3ee);
+            box-shadow: 0 0 12px rgba(34, 211, 238, 0.9);
+        }
+
+        /* ====== Cards Grid ====== */
         .cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
             gap: 20px;
         }
-        
+
         .card {
-            background: var(--bg-card);
-            border-radius: 12px;
+            background: var(--bg-elevated);
+            border-radius: var(--radius-md);
             padding: 20px;
-            border: 1px solid var(--border);
+            border: 1px solid var(--border-subtle);
             transition: transform 0.2s, box-shadow 0.2s;
         }
-        
+
         .card:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 25px rgba(0,0,0,0.3);
         }
-        
+
         .card h3 {
             font-size: 1.1em;
             margin-bottom: 15px;
-            color: var(--accent-blue);
+            color: var(--primary);
         }
-        
-        .card iframe {
+
+        .card-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 7px 14px;
+            border-radius: var(--radius-pill);
+            font-size: 13px;
+            font-weight: 500;
+            background: linear-gradient(135deg, #22d3ee, #6366f1);
+            color: #0b1120;
+            text-decoration: none;
+            transition: all var(--transition-normal);
+            margin-top: 15px;
+        }
+
+        .card-btn:hover {
+            filter: brightness(1.05);
+            transform: translateY(-1px);
+        }
+
+        /* ====== Looker Studio Iframe ====== */
+        .looker-embed {
             width: 100%;
             height: 400px;
             border: none;
             border-radius: 8px;
             background: white;
+            display: block;
         }
-        
-        .card-btn {
-            display: inline-block;
-            background: var(--accent-blue);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 500;
-            margin-top: 10px;
-            transition: background 0.2s;
-        }
-        
-        .card-btn:hover {
-            background: #2563eb;
-        }
-        
-        /* News Section */
+
+        /* ====== News Section ====== */
         .news-info {
             text-align: center;
-            padding: 30px;
+            padding: 15px;
         }
-        
-        .news-info h3 {
-            font-size: 1.3em;
-            margin-bottom: 10px;
-        }
-        
+
         .news-count {
-            font-size: 3em;
+            font-size: 2em;
             font-weight: bold;
-            color: var(--accent-gold);
-            margin: 15px 0;
+            background: linear-gradient(135deg, #22d3ee, #6366f1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 8px 0;
         }
-        
-        /* Gallery Section */
+
+        /* ====== Gallery Section ====== */
         .gallery-controls {
             display: flex;
             align-items: center;
@@ -155,89 +322,69 @@
             margin-bottom: 20px;
             flex-wrap: wrap;
         }
-        
+
         .gallery-controls label {
             font-weight: 500;
         }
-        
+
         .gallery-controls select {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            color: var(--text-primary);
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-main);
             padding: 10px 15px;
             border-radius: 8px;
             font-size: 1em;
             min-width: 150px;
+            cursor: pointer;
         }
-        
+
         .gallery-count {
             color: var(--text-muted);
         }
-        
-        .gallery-refresh {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            color: var(--text-primary);
-            padding: 10px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1em;
-        }
-        
-        .gallery-refresh:hover {
-            background: var(--border);
-        }
-        
+
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
         }
-        
+
         .gallery-item {
-            background: var(--bg-card);
+            background: var(--bg-elevated);
             border-radius: 8px;
             overflow: hidden;
-            aspect-ratio: 1;
             cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s;
             position: relative;
+            border: 2px solid rgba(55, 65, 81, 0.95);
         }
-        
+
         .gallery-item:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            transform: scale(1.03);
+            box-shadow: 0 5px 25px rgba(0,0,0,0.5);
+            border-color: var(--primary);
         }
-        
+
         .gallery-item img {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
+            height: 300px;
+            object-fit: contain;
+            background: #000;
         }
-        
+
         .gallery-item .img-name {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(0,0,0,0.7);
-            color: white;
-            font-size: 0.75em;
-            padding: 5px;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            overflow: hidden;
+            display: none;
         }
-        
+
         .gallery-loading {
             display: flex;
             align-items: center;
             justify-content: center;
             height: 100%;
             color: var(--text-muted);
+            font-size: 2em;
         }
-        
-        /* Lightbox */
+
+        /* ====== Lightbox ====== */
         .lightbox {
             display: none;
             position: fixed;
@@ -251,23 +398,21 @@
             justify-content: center;
             flex-direction: column;
         }
-        
-        .lightbox.active {
-            display: flex;
-        }
-        
+
+        .lightbox.active { display: flex; }
+
         .lightbox img {
             max-width: 90%;
             max-height: 80%;
             border-radius: 8px;
         }
-        
+
         .lightbox-info {
             color: white;
             margin-top: 15px;
             text-align: center;
         }
-        
+
         .lightbox-close {
             position: absolute;
             top: 20px;
@@ -276,7 +421,7 @@
             color: white;
             cursor: pointer;
         }
-        
+
         .lightbox-nav {
             position: absolute;
             top: 50%;
@@ -289,109 +434,174 @@
             font-size: 1.5em;
             border-radius: 8px;
         }
-        
-        .lightbox-nav:hover {
-            background: rgba(255,255,255,0.3);
-        }
-        
-        .lightbox-nav.prev {
-            left: 20px;
-        }
-        
-        .lightbox-nav.next {
-            right: 20px;
-        }
-        
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 30px;
+
+        .lightbox-nav:hover { background: rgba(255,255,255,0.3); }
+        .lightbox-nav.prev { left: 20px; }
+        .lightbox-nav.next { right: 20px; }
+
+        /* ====== Footer ====== */
+        .site-footer {
+            border-top: 1px solid rgba(31, 41, 55, 0.95);
+            padding: 16px 20px 20px;
+            font-size: 11px;
             color: var(--text-muted);
-            font-size: 0.9em;
-            border-top: 1px solid var(--border);
-            margin-top: 40px;
+            background: radial-gradient(circle at top, #020617 0, #020617 100%);
         }
-        
-        /* Loading state */
-        .loading {
-            text-align: center;
-            padding: 40px;
-            color: var(--text-muted);
+
+        .footer-inner {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            justify-content: space-between;
         }
-        
-        /* Responsive */
+
+        /* ====== Responsive ====== */
+        @media (max-width: 900px) {
+            .hero { grid-template-columns: 1fr; }
+            .hero-panel { order: -1; }
+            .cards-grid { grid-template-columns: 1fr; }
+        }
+
         @media (max-width: 768px) {
-            .cards-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            header h1 {
-                font-size: 1.8em;
-            }
-            
-            .gallery-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
+            .page-container { padding: 20px 16px 32px; }
+            .section { padding: 16px 14px; margin-bottom: 24px; }
+            .section-title { font-size: 17px; }
+            .gallery-grid { grid-template-columns: repeat(3, 1fr); }
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="site-shell">
         <!-- Header -->
-        <header>
-            <h1><span>🌙</span> DataHub</h1>
-            <p>曦曦的資料視覺化中心</p>
-            <p class="last-update">最後更新: <span id="update-time">載入中...</span></p>
+        <header class="site-header">
+            <div class="nav-inner">
+                <div class="brand">
+                    <div class="brand-mark"></div>
+                    <div>
+                        <div class="brand-text-main">🌙 DataHub</div>
+                        <div class="brand-text-sub">曦曦的資料視覺化中心</div>
+                    </div>
+                </div>
+                <div class="last-update">最後更新: <span id="update-time">載入中...</span></div>
+            </div>
         </header>
-        
-        <!-- 數據分析區塊 -->
-        <section class="section">
-            <h2 class="section-title">📊 數據分析</h2>
-            <div class="cards-grid">
-                <div class="card">
-                    <h3>台指期三大法人數據分析</h3>
-                    <iframe src="https://lookerstudio.google.com/embed/reporting/bd230334-ff08-40f1-b8c2-379338a26422/page/4zitF" allowfullscreen></iframe>
-                </div>
-                <div class="card">
-                    <h3>台指 買賣交易數據 綜合分析</h3>
-                    <iframe src="https://lookerstudio.google.com/embed/reporting/86a25a4a-cb5b-4d76-a197-bd3f2eedbacc/page/3tqtF" allowfullscreen></iframe>
-                </div>
+
+        <!-- Main Content -->
+        <main>
+            <div class="page-container">
+                <!-- Overview Section -->
+                <section class="section">
+                    <div class="section-header">
+                        <div class="section-title">
+                            總覽
+                            <span class="section-title-tag">Overview</span>
+                        </div>
+                    </div>
+                    <hr style="border: none; border-top: 1px solid rgba(31, 41, 55, 0.95); margin: 12px 0 18px;">
+                    <div class="hero">
+                        <div>
+                            <div class="hero-title">一個入口，掌握所有數據</div>
+                            <p class="hero-subtitle">
+                                整合 Looker Studio 報告、新聞雷達、曦曦圖庫於一體。
+                                自動化更新，随時查看。
+                            </p>
+                            <div class="hero-badges">
+                                <div class="badge"><span class="badge-dot"></span>2 個數據報告</div>
+                                <div class="badge"><span class="badge-dot"></span>550+ 新聞</div>
+                                <div class="badge"><span class="badge-dot"></span>22 張圖片</div>
+                            </div>
+                        </div>
+                        <div class="hero-panel">
+                            <div class="hero-panel-inner">
+                                <div class="hero-pill">
+                                    <span class="hero-pill-dot"></span>
+                                    DataHub 核心功能
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 數據分析 Section -->
+                <section class="section">
+                    <div class="section-header">
+                        <div class="section-title">
+                            📊 數據分析
+                            <span class="section-title-tag">Looker Studio</span>
+                        </div>
+                    </div>
+                    <div class="cards-grid">
+                        <div class="card">
+                            <h3>台指期三大法人數據分析</h3>
+                            <a href="https://lookerstudio.google.com/reporting/bd230334-ff08-40f1-b8c2-379338a26422/page/4zitF" target="_blank" class="card-btn">
+                                📊 在 Looker Studio 中開啟報告
+                            </a>
+                        </div>
+                        <div class="card">
+                            <h3>台指 買賣交易數據 綜合分析</h3>
+                            <a href="https://lookerstudio.google.com/reporting/86a25a4a-cb5b-4d76-a197-bd3f2eedbacc/page/3tqtF" target="_blank" class="card-btn">
+                                📊 在 Looker Studio 中開啟報告
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 新聞雷達 Section -->
+                <section class="section">
+                    <div class="section-header">
+                        <div class="section-title">
+                            📰 新聞雷達
+                            <span class="section-title-tag">NewsRadar</span>
+                        </div>
+                    </div>
+                    <div class="news-info">
+                        <p>聚合全球資訊，洞察市場趨勢</p>
+                        <div class="news-count">550+</div>
+                        <p>涵蓋 AI、金融、科技、國際等六大領域</p>
+                        <a href="https://tree25857-xi.github.io/news-radar/" target="_blank" class="card-btn">
+                            前往 NewsRadar
+                        </a>
+                    </div>
+                </section>
+
+                <!-- 曦曦圖庫 Section -->
+                <section class="section">
+                    <div class="section-header">
+                        <div class="section-title">
+                            🖼️ 曦曦圖庫
+                            <span class="section-title-tag">Gallery</span>
+                        </div>
+                    </div>
+                    <div class="gallery-controls">
+                        <label>選擇日期:</label>
+                        <select id="gallery-date" onchange="loadGallery()">
+                            <option value="">載入中...</option>
+                        </select>
+                        <span id="gallery-count" class="gallery-count"></span>
+                    </div>
+                    <div class="gallery-grid" id="gallery-grid">
+                        <div class="gallery-loading">載入圖庫...</div>
+                    </div>
+                </section>
             </div>
-        </section>
-        
-        <!-- 新聞雷達區塊 -->
-        <section class="section">
-            <h2 class="section-title">📰 新聞雷達</h2>
-            <div class="news-info">
-                <h3>聚合全球資訊，洞察市場趨勢</h3>
-                <div class="news-count" id="news-count">550+</div>
-                <p>涵蓋 AI、金融、科技、國際等六大領域</p>
-                <a href="https://tree25857-xi.github.io/news-radar/" target="_blank" class="card-btn">前往 NewsRadar</a>
-            </div>
-        </section>
-        
-        <!-- 曦曦圖庫區塊 -->
-        <section class="section">
-            <h2 class="section-title">🖼️ 曦曦圖庫</h2>
-            <div class="gallery-controls">
-                <label>選擇日期:</label>
-                <select id="gallery-date" onchange="loadGallery()">
-                    <option value="">載入中...</option>
-                </select>
-                <span id="gallery-count" class="gallery-count"></span>
-                <button class="gallery-refresh" onclick="refreshGallery()">🔄 刷新</button>
-            </div>
-            <div class="gallery-grid" id="gallery-grid">
-                <div class="gallery-loading">載入圖庫...</div>
-            </div>
-        </section>
-        
+        </main>
+
         <!-- Footer -->
-        <footer>
-            <p>🌙 DataHub by 曦曦 | 2026</p>
+        <footer class="site-footer">
+            <div class="footer-inner">
+                <div>
+                    🌙 DataHub by 曦曦 | 2026
+                </div>
+                <div>
+                    自動化更新 · 每 6 小時
+                </div>
+            </div>
         </footer>
     </div>
-    
+
     <!-- Lightbox -->
     <div class="lightbox" id="lightbox">
         <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
@@ -400,9 +610,9 @@
         <div class="lightbox-info" id="lightbox-info"></div>
         <button class="lightbox-nav next" onclick="navigateImage(1)">▶</button>
     </div>
-    
+
     <script>
-        // Gallery data
+        // Embedded gallery data with direct URLs
         let galleryData = {
         "updated": null,
         "dates": [
@@ -697,27 +907,26 @@
 };
         let currentImages = [];
         let currentIndex = 0;
+
         
-        // Load gallery JSON
+
         function loadGalleryData() {
             populateDateSelector();
             document.getElementById('update-time').textContent = new Date().toLocaleString('zh-TW');
         }
-        
-        // Populate date selector
+
         function populateDateSelector() {
             const select = document.getElementById('gallery-date');
             select.innerHTML = '';
             
             if (galleryData.dates && galleryData.dates.length > 0) {
-                galleryData.dates.forEach(dateObj => {
+                galleryData.dates.forEach(function(dateObj) {
                     const option = document.createElement('option');
                     option.value = dateObj.date;
-                    option.textContent = `${dateObj.date} (${dateObj.count}張)`;
+                    option.textContent = dateObj.date + ' (' + dateObj.count + '張)';
                     select.appendChild(option);
                 });
                 
-                // Select first date
                 if (galleryData.dates.length > 0) {
                     select.value = galleryData.dates[0].date;
                     loadGallery();
@@ -726,8 +935,7 @@
                 select.innerHTML = '<option value="">無可用日期</option>';
             }
         }
-        
-        // Load gallery for selected date
+
         function loadGallery() {
             const dateStr = document.getElementById('gallery-date').value;
             const grid = document.getElementById('gallery-grid');
@@ -738,7 +946,7 @@
                 return;
             }
             
-            const dateData = galleryData.dates.find(d => d.date === dateStr);
+            const dateData = galleryData.dates.find(function(d) { return d.date === dateStr; });
             
             if (!dateData || !dateData.images || dateData.images.length === 0) {
                 grid.innerHTML = '<div class="gallery-loading">該日期無圖片</div>';
@@ -747,18 +955,18 @@
             }
             
             currentImages = dateData.images;
-            countSpan.textContent = `共 ${currentImages.length} 張圖片`;
+            countSpan.textContent = '共 ' + currentImages.length + ' 張圖片';
             
             grid.innerHTML = '';
-            currentImages.forEach((img, index) => {
+            currentImages.forEach(function(img, index) {
                 const item = document.createElement('div');
                 item.className = 'gallery-item';
-                item.onclick = () => openLightbox(index);
+                item.onclick = function() { openLightbox(index); };
                 
                 if (img.thumbnail) {
-                    item.innerHTML = `<img src="${img.thumbnail}" alt="${img.name}" loading="lazy">`;
+                    item.innerHTML = '<img src="' + img.thumbnail + '" alt="' + img.name + '" loading="lazy">';
                 } else {
-                    item.innerHTML = `<div class="gallery-loading">📷</div>`;
+                    item.innerHTML = '<div class="gallery-loading">📷</div>';
                 }
                 
                 const nameDiv = document.createElement('div');
@@ -769,39 +977,30 @@
                 grid.appendChild(item);
             });
         }
-        
-        // Refresh gallery
-        function refreshGallery() {
-            window.location.reload();
-        }
-        
-        // Lightbox functions
+
         function openLightbox(index) {
             currentIndex = index;
             const img = currentImages[index];
-            
-            document.getElementById('lightbox-img').src = img.url || img.thumbnail;
+            document.getElementById('lightbox-img').src = img.direct_url || img.thumbnail;
             document.getElementById('lightbox-info').textContent = img.name;
             document.getElementById('lightbox').classList.add('active');
             document.body.style.overflow = 'hidden';
         }
-        
+
         function closeLightbox() {
             document.getElementById('lightbox').classList.remove('active');
             document.body.style.overflow = '';
         }
-        
+
         function navigateImage(direction) {
             currentIndex += direction;
             if (currentIndex < 0) currentIndex = currentImages.length - 1;
             if (currentIndex >= currentImages.length) currentIndex = 0;
-            
             const img = currentImages[currentIndex];
-            document.getElementById('lightbox-img').src = img.url || img.thumbnail;
+            document.getElementById('lightbox-img').src = img.direct_url || img.thumbnail;
             document.getElementById('lightbox-info').textContent = img.name;
         }
-        
-        // Keyboard navigation
+
         document.addEventListener('keydown', function(e) {
             if (document.getElementById('lightbox').classList.contains('active')) {
                 if (e.key === 'Escape') closeLightbox();
@@ -809,15 +1008,11 @@
                 if (e.key === 'ArrowRight') navigateImage(1);
             }
         });
-        
-        // Close lightbox on background click
+
         document.getElementById('lightbox').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeLightbox();
-            }
+            if (e.target === this) closeLightbox();
         });
-        
-        // Initialize
+
         window.onload = function() {
             loadGalleryData();
         };
