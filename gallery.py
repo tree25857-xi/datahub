@@ -77,12 +77,11 @@ def list_images_in_folder(folder_id):
         
         images = []
         for f in results.get('files', []):
-            # 使用 Google Drive 縮圖 API（/d/ 格式更穩定，不會過期）
-            file_id = f['id']
-            thumbnail = f'https://drive.google.com/thumbnail?id={file_id}&sz=s400'
+            # 取得 Google Drive 原始縮圖 URL
+            thumbnail = f.get('thumbnailLink', '')
             
             images.append({
-                'id': file_id,
+                'id': f['id'],
                 'name': f['name'],
                 'mimeType': f.get('mimeType', ''),
                 'created': f.get('createdTime', '')[:19],
