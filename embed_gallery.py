@@ -12,15 +12,27 @@ gallery_path = os.path.join(SCRIPT_DIR, 'gallery.json')
 with open(gallery_path, 'r', encoding='utf-8') as f:
     gallery_data = json.load(f)
 
-# 轉換 Google Drive 連結為直接下載連結
+# 轉換 Google Drive 連結為直接下載連結 + 修復 thumbnail URL
 for date_obj in gallery_data['dates']:
     for img in date_obj['images']:
         url = img.get('url', '')
+        thumbnail_url = img.get('thumbnail', '')
+        
+        # 從 URL 取出 file_id
+        file_id = None
         if '/file/d/' in url:
             file_id = url.split('/file/d/')[1].split('/')[0]
             img['direct_url'] = f'https://drive.google.com/uc?export=view&id={file_id}'
+        elif '/thumbnail?id=' in thumbnail_url:
+            file_id = thumbnail_url.split('/thumbnail?id=')[1].split('&')[0]
+            img['direct_url'] = f'https://drive.google.com/uc?export=view&id={file_id}'
         else:
             img['direct_url'] = url
+        
+        # 修復 thumbnail：使用 Google Drive 標準 thumbnail API
+        # 格式：https://drive.google.com/thumbnail?id=FILE_ID&sz=s400
+        if file_id:
+            img['thumbnail'] = f'https://drive.google.com/thumbnail?id={file_id}&sz=s400'
 
 # 讀取 index.html
 html_path = os.path.join(SCRIPT_DIR, 'index.html')

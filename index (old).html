@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌙 DataHub - 曦曦的資料視覺化中心</title>
+    <style>
+        :root {
+            --bg-primary: #0f0f23;
+            --bg-secondary: #1a1a3e;
+            --bg-card: #16213e;
+            --text-primary: #e2e8f0;
+            --text-muted: #94a3b8;
+            --accent-blue: #3b82f6;
+            --accent-gold: #f59e0b;
+            --border: #334155;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', -apple-system, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Header */
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 40px;
+        }
+        
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        header p {
+            color: var(--text-muted);
+            font-size: 1.1em;
+        }
+        
+        .last-update {
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: var(--accent-gold);
+        }
+        
+        /* Section */
+        .section {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 1px solid var(--border);
+        }
+        
+        .section-title {
+            font-size: 1.4em;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 15px;
+        }
+        
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 20px;
+        }
+        
+        .card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid var(--border);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+        
+        .card h3 {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            color: var(--accent-blue);
+        }
+        
+        .card iframe {
+            width: 100%;
+            height: 400px;
+            border: none;
+            border-radius: 8px;
+            background: white;
+        }
+        
+        .card-btn {
+            display: inline-block;
+            background: var(--accent-blue);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            margin-top: 10px;
+            transition: background 0.2s;
+        }
+        
+        .card-btn:hover {
+            background: #2563eb;
+        }
+        
+        /* News Section */
+        .news-info {
+            text-align: center;
+            padding: 30px;
+        }
+        
+        .news-info h3 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+        
+        .news-count {
+            font-size: 3em;
+            font-weight: bold;
+            color: var(--accent-gold);
+            margin: 15px 0;
+        }
+        
+        /* Gallery Section */
+        .gallery-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .gallery-controls label {
+            font-weight: 500;
+        }
+        
+        .gallery-controls select {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 1em;
+            min-width: 150px;
+        }
+        
+        .gallery-count {
+            color: var(--text-muted);
+        }
+        
+        .gallery-refresh {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        
+        .gallery-refresh:hover {
+            background: var(--border);
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+        }
+        
+        .gallery-item {
+            background: var(--bg-card);
+            border-radius: 8px;
+            overflow: hidden;
+            aspect-ratio: 1;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+        }
+        
+        .gallery-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .gallery-item .img-name {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            font-size: 0.75em;
+            padding: 5px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+        
+        .gallery-loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: var(--text-muted);
+        }
+        
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        
+        .lightbox.active {
+            display: flex;
+        }
+        
+        .lightbox img {
+            max-width: 90%;
+            max-height: 80%;
+            border-radius: 8px;
+        }
+        
+        .lightbox-info {
+            color: white;
+            margin-top: 15px;
+            text-align: center;
+        }
+        
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 3em;
+            color: white;
+            cursor: pointer;
+        }
+        
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            padding: 20px 15px;
+            cursor: pointer;
+            font-size: 1.5em;
+            border-radius: 8px;
+        }
+        
+        .lightbox-nav:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        
+        .lightbox-nav.prev {
+            left: 20px;
+        }
+        
+        .lightbox-nav.next {
+            right: 20px;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-muted);
+            font-size: 0.9em;
+            border-top: 1px solid var(--border);
+            margin-top: 40px;
+        }
+        
+        /* Loading state */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-muted);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            header h1 {
+                font-size: 1.8em;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1><span>🌙</span> DataHub</h1>
+            <p>曦曦的資料視覺化中心</p>
+            <p class="last-update">最後更新: <span id="update-time">載入中...</span></p>
+        </header>
+        
+        <!-- 數據分析區塊 -->
+        <section class="section">
+            <h2 class="section-title">📊 數據分析</h2>
+            <div class="cards-grid">
+                <div class="card">
+                    <h3>台指期三大法人數據分析</h3>
+                    <iframe src="https://lookerstudio.google.com/embed/reporting/bd230334-ff08-40f1-b8c2-379338a26422/page/4zitF" allowfullscreen></iframe>
+                </div>
+                <div class="card">
+                    <h3>台指 買賣交易數據 綜合分析</h3>
+                    <iframe src="https://lookerstudio.google.com/embed/reporting/86a25a4a-cb5b-4d76-a197-bd3f2eedbacc/page/3tqtF" allowfullscreen></iframe>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 新聞雷達區塊 -->
+        <section class="section">
+            <h2 class="section-title">📰 新聞雷達</h2>
+            <div class="news-info">
+                <h3>聚合全球資訊，洞察市場趨勢</h3>
+                <div class="news-count" id="news-count">550+</div>
+                <p>涵蓋 AI、金融、科技、國際等六大領域</p>
+                <a href="https://tree25857-xi.github.io/news-radar/" target="_blank" class="card-btn">前往 NewsRadar</a>
+            </div>
+        </section>
+        
+        <!-- 曦曦圖庫區塊 -->
+        <section class="section">
+            <h2 class="section-title">🖼️ 曦曦圖庫</h2>
+            <div class="gallery-controls">
+                <label>選擇日期:</label>
+                <select id="gallery-date" onchange="loadGallery()">
+                    <option value="">載入中...</option>
+                </select>
+                <span id="gallery-count" class="gallery-count"></span>
+                <button class="gallery-refresh" onclick="refreshGallery()">🔄 刷新</button>
+            </div>
+            <div class="gallery-grid" id="gallery-grid">
+                <div class="gallery-loading">載入圖庫...</div>
+            </div>
+        </section>
+        
+        <!-- Footer -->
+        <footer>
+            <p>🌙 DataHub by 曦曦 | 2026</p>
+        </footer>
+    </div>
+    
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+        <button class="lightbox-nav prev" onclick="navigateImage(-1)">◀</button>
+        <img id="lightbox-img" src="" alt="Gallery Image">
+        <div class="lightbox-info" id="lightbox-info"></div>
+        <button class="lightbox-nav next" onclick="navigateImage(1)">▶</button>
+    </div>
+    
+    <script>
+        // Gallery data
+        const GALLERY_DATA = {
+        "updated": null,
+        "dates": [
+                {
+                        "date": "2026-04-14",
+                        "folder_id": "1XJSAox9eqblWiKce9QKBae7h0N2z_eRo",
+                        "count": 3,
+                        "images": [
+                                {
+                                        "name": "2026-04-14_datastudio_1900.png",
+                                        "url": "https://drive.google.com/file/d/121QWkNTicWEjOPUnvTsAykIiNWkpDXus/view?usp=drivesdk",
+                                        "thumbnail": "https://drive.google.com/thumbnail?id=121QWkNTicWEjOPUnvTsAykIiNWkpDXus&sz=s400",
+                                        "created": "2026-04-15T22:40:35",
+                                        "direct_url": "https://drive.google.com/uc?export=view&id=121QWkNTicWEjOPUnvTsAykIiNWkpDXus"
+                                },
+                                {
+                                        "name": "2026-04-14_banker_open_1300.png",
+                                        "url": "https://drive.google.com/file/d/1bE7Y5PcfJTnwDFwjXTz110O8Q1icUKCC/view?usp=drivesdk",
+                                        "thumbnail": "https://drive.google.com/thumbnail?id=1bE7Y5PcfJTnwDFwjXTz110O8Q1icUKCC&sz=s400",
+                                        "created": "2026-04-15T22:40:32",
+                                        "direct_url": "https://drive.google.com/uc?export=view&id=1bE7Y5PcfJTnwDFwjXTz110O8Q1icUKCC"
+                                },
+                                {
+                                        "name": "2026-04-14_banker_net_1300.png",
+                                        "url": "https://drive.google.com/file/d/1PY5RSNEEX263Z6DatHyjGyEsmf0MAxcQ/view?usp=drivesdk",
+                                        "thumbnail": "https://drive.google.com/thumbnail?id=1PY5RSNEEX263Z6DatHyjGyEsmf0MAxcQ&sz=s400",
+                                        "created": "2026-04-15T22:40:30",
+                                        "direct_url": "https://drive.google.com/uc?export=view&id=1PY5RSNEEX263Z6DatHyjGyEsmf0MAxcQ"
+                                }
+                        ]
+                },
+                {
+                        "date": "2026-04-13",
+                        "folder_id": "1BAM__8VhaF4RdM4-yjzWGPj_f5OKk15G",
+                        "count": 3,
+                        "images": [
+                                {
+                                        "name": "2026-04-13_datastudio_1900.png",
+                                        "url": "https://drive.google.com/file/d/1K7WsMJgDw_ktrN2xlCMDXRsPEDQBuM4s/view?usp=drivesdk",
+                                        "thumbnail": "https://drive.google.com/thumbnail?id=1K7WsMJgDw_ktrN2xlCMDXRsPEDQBuM4s&sz=s400",
+                                        "created": "2026-04-15T22:09:59",
+                                        "direct_url": "https://drive.google.com/uc?export=view&id=1K7WsMJgDw_ktrN2xlCMDXRsPEDQBuM4s"
+                                },
+                                {
+                                        "name": "2026-04-13_banker_open_1300.png",
+                                        "url": "https://drive.google.com/file/d/1B1SEGg9FlyGkm6tAs7F1OX6j9sViKylD/view?usp=drivesdk",
+                                        "thumbnail": "https://drive.google.com/thumbnail?id=1B1SEGg9FlyGkm6tAs7F1OX6j9sViKylD&sz=s400",
+                                        "created": "2026-04-15T22:09:57",
+                                        "direct_url": "https://drive.google.com/uc?export=view&id=1B1SEGg9FlyGkm6tAs7F1OX6j9sViKylD"
+                                },
+                                {
+                                        "name": "2026-04-13_banker_net_1300.png",
+                                        "url": "https://drive.google.com/file/d/1Mls325s8mRe07op6VRzm3mpatZYdpwhc/view?usp=drivesdk",
+                                        "thumbnail": "https://drive.google.com/thumbnail?id=1Mls325s8mRe07op6VRzm3mpatZYdpwhc&sz=s400",
+                                        "created": "2026-04-15T22:09:55",
+                                        "direct_url": "https://drive.google.com/uc?export=view&id=1Mls325s8mRe07op6VRzm3mpatZYdpwhc"
+                                }
+                        ]
+                },
+                {
+                        "date": "2026-04-10",
+                        "folder_id": "1P9Jl0XGLmnl_6ZgurZAOgH4NpFlfpEH7",
+                        "count": 3,
+                        "images": [
+                                {
+                                        "name": "2026-04-10_datastudio_1900.png",
+                                        "url": "https://drive.google.com/file/d/1Nf0xrf8bngmfR8z6ufPeo_GNgocYNJuV/view?usp=drivesdk",
+                                        "thumbnail": "https://drive.google.com/thumbnail?id=1Nf0xrf8bngmfR8z6ufPeo_GNgocYNJuV&sz=s400",
+                                        "created": "2026-04-15T21:15:18",
+                                        "direct_url": "https://drive.google.com/uc?export=view&id=1Nf0xrf8bngmfR8z6ufPeo_GNgocYNJuV"
+                                },
+                                {
+                                        "name": "2026-04-10_banker_open_1300.png",
+                                        "url": "https://drive.google.com/file/d/1bxvb4wdlJ1fxtqsDN73iADUYsv6c5f26/view?usp=drivesdk",
+                                        "thumbnail": "https://drive.google.com/thumbnail?id=1bxvb4wdlJ1fxtqsDN73iADUYsv6c5f26&sz=s400",
+                                        "created": "2026-04-15T21:08:47",
+                                        "direct_url": "https://drive.google.com/uc?export=view&id=1bxvb4wdlJ1fxtqsDN73iADUYsv6c5f26"
+                                },
+                                {
+                                        "name": "2026-04-10_banker_net_1300.png",
+                                        "url": "https://drive.google.com/file/d/1mrSQR_rWuh8lB2ceiySS8GqgqDBWdx9y/view?usp=drivesdk",
+                                        "thumbnail": "https://drive.google.com/thumbnail?id=1mrSQR_rWuh8lB2ceiySS8GqgqDBWdx9y&sz=s400",
+                                        "created": "2026-04-15T21:08:45",
+                                        "direct_url": "https://drive.google.com/uc?export=view&id=1mrSQR_rWuh8lB2ceiySS8GqgqDBWdx9y"
+                                }
+                        ]
+                },
+                {
+                        "date": "2026-04-09",
+                        "folder_id": "19fEl1_d18oSHh2xuLkJTYnf2A7rAmmgH",
+                        "count": 3,
+                        "images": [
+                                {
+                                        "name": "2026-04-09_taifex_1290x1900.png",
+                                        "url": "https://drive.google.com/file/d/1G43y9XGp7vFuNrh4qXlteJ6_LyAo97uI/view?usp=drivesdk",
+                                        "thumbnail": "https://drive.google.com/thumbnail?id=1G43y9XGp7vFuNrh4qXlteJ6_LyAo97uI&sz=s400",
+                                        "created": "2026-04-10T10:47:48",
+                                        "direct_url": "https://drive.google.com/uc?export=view&id=1G43y9XGp7vFuNrh4qXlteJ6_LyAo97uI"
+                                },
+                                {
+                                        "name": "2026-04-09_banker_open_1300.png",
+                                        "url": "https://drive.google.com/file/d/1csGo_CfB4jTROjT8a8zHVnyxmg9Wxr8p/view?usp=drivesdk",
+                                        "thumbnail": "https://drive.google.com/thumbnail?id=1csGo_CfB4jTROjT8a8zHVnyxmg9Wxr8p&sz=s400",
+                                        "created": "2026-04-10T10:47:46",
+                                        "direct_url": "https://drive.google.com/uc?export=view&id=1csGo_CfB4jTROjT8a8zHVnyxmg9Wxr8p"
+                                },
+                                {
+                                        "name": "2026-04-09_banker_net_1300.png",
+                                        "url": "https://drive.google.com/file/d/1CVSDO8XNpAObB9FiK_nigH39kFjEouap/view?usp=drivesdk",
+                                        "thumbnail": "https://drive.google.com/thumbnail?id=1CVSDO8XNpAObB9FiK_nigH39kFjEouap&sz=s400",
+                                        "created": "2026-04-10T10:47:43",
+                                        "direct_url": "https://drive.google.com/uc?export=view&id=1CVSDO8XNpAObB9FiK_nigH39kFjEouap"
+                                }
+                        ]
+                },
+                {
+                        "date": "2026-04-08",
+                        "folder_id": "1f-GB0NEbU1n05jQw1gn7sHgo-j5x5gtT",
+                        "count": 3,
+                        "images": [
+                                {
+                                        "name": "2026-04-08_banker_open_1300.png",
+                                        "url": "https://drive.google.com/file/d/1ZX-u4xvRU_CNJYQVc40PQESHLs43C00E/view?usp=drivesdk",
+                                        "thumbnail": "https://drive.google.com/thumbnail?id=1ZX-u4xvRU_CNJYQVc40PQESHLs43C00E&sz=s400",
+                                        "created": "2026-04-08T08:42:59",
+                                        "direct_url": "https://drive.google.com/uc?export=view&id=1ZX-u4xvRU_CNJYQVc40PQESHLs43C00E"
+                                },
+                                {
+                                        "name": "2026-04-08_banker_net_1300.png",
+                                        "url": "https://drive.google.com/file/d/1EXKAtwj1B4f-visEwhFILP6tk7LtXQaZ/view?usp=drivesdk",
+                                        "thumbnail": "https://drive.google.com/thumbnail?id=1EXKAtwj1B4f-visEwhFILP6tk7LtXQaZ&sz=s400",
+                                        "created": "2026-04-08T08:42:55",
+                                        "direct_url": "https://drive.google.com/uc?export=view&id=1EXKAtwj1B4f-visEwhFILP6tk7LtXQaZ"
+                                },
+                                {
+                                        "name": "2026-04-08_taifex_1290x1900.png",
+                                        "url": "https://drive.google.com/file/d/1NMqCG4Vi27XhzvfXoDGU_2Wu_arc2Uyt/view?usp=drivesdk",
+                                        "thumbnail": "https://drive.google.com/thumbnail?id=1NMqCG4Vi27XhzvfXoDGU_2Wu_arc2Uyt&sz=s400",
+                                        "created": "2026-04-08T07:48:51",
+                                        "direct_url": "https://drive.google.com/uc?export=view&id=1NMqCG4Vi27XhzvfXoDGU_2Wu_arc2Uyt"
+                                }
+                        ]
+                },
+                {
+                        "date": "2026-04-07",
+                        "folder_id": "1vOqsc_f1A-j9aCFtGWie_a-fKd5kDzSx",
+                        "count": 3,
+                        "images": [
+                                {
+                                        "name": "3_banker_open.png",
+                                        "url": "https://drive.google.com/file/d/1uZGueJobZ5iXvuZ1HqnQUxglrAYKhfpQ/view?usp=drivesdk",
+                                        "thumbnail": "https://drive.google.com/thumbnail?id=1uZGueJobZ5iXvuZ1HqnQUxglrAYKhfpQ&sz=s400",
+                                        "created": "2026-04-07T14:11:02",
+                                        "direct_url": "https://drive.google.com/uc?export=view&id=1uZGueJobZ5iXvuZ1HqnQUxglrAYKhfpQ"
+                                },
+                                {
+                                        "name": "1_taifex.png",
+                                        "url": "https://drive.google.com/file/d/1fSxj8ERTGncyToCx5HfwC3lnOJzOSz1p/view?usp=drivesdk",
+                                        "thumbnail": "https://drive.google.com/thumbnail?id=1fSxj8ERTGncyToCx5HfwC3lnOJzOSz1p&sz=s400",
+                                        "created": "2026-04-07T14:11:00",
+                                        "direct_url": "https://drive.google.com/uc?export=view&id=1fSxj8ERTGncyToCx5HfwC3lnOJzOSz1p"
+                                },
+                                {
+                                        "name": "2_banker_net.png",
+                                        "url": "https://drive.google.com/file/d/12wz1G75gfaLzm3xBmP-koBxrxyhlxKR5/view?usp=drivesdk",
+                                        "thumbnail": "https://drive.google.com/thumbnail?id=12wz1G75gfaLzm3xBmP-koBxrxyhlxKR5&sz=s400",
+                                        "created": "2026-04-07T14:10:57",
+                                        "direct_url": "https://drive.google.com/uc?export=view&id=12wz1G75gfaLzm3xBmP-koBxrxyhlxKR5"
+                                }
+                        ]
+                },
+                {
+                        "date": "2026-04-02",
+                        "folder_id": "1IBiB9v869GpKw-HOJ9jM74660yckgP47",
+                        "count": 3,
+                        "images": [
+                                {
+                                        "name": "2026-04-04_taifex_1900.png",
+                                        "url": "https://drive.google.com/file/d/1BNGSku9ZMnGnoFtf31siDNw6MUor1DHV/view?usp=drivesdk",
+                                        "thumbnail": "https://drive.google.com/thumbnail?id=1BNGSku9ZMnGnoFtf31siDNw6MUor1DHV&sz=s400",
+                                        "created": "2026-04-04T09:14:30",
+                                        "direct_url": "https://drive.google.com/uc?export=view&id=1BNGSku9ZMnGnoFtf31siDNw6MUor1DHV"
+                                },
+                                {
+                                        "name": "2026-04-04_banker_net_1200.png",
+                                        "url": "https://drive.google.com/file/d/1fNc3IPRXsZ_VbkzgvpKhqz7V9G8fOCvW/view?usp=drivesdk",
+                                        "thumbnail": "https://drive.google.com/thumbnail?id=1fNc3IPRXsZ_VbkzgvpKhqz7V9G8fOCvW&sz=s400",
+                                        "created": "2026-04-04T09:10:03",
+                                        "direct_url": "https://drive.google.com/uc?export=view&id=1fNc3IPRXsZ_VbkzgvpKhqz7V9G8fOCvW"
+                                },
+                                {
+                                        "name": "2026-04-04_taifex_1900.png",
+                                        "url": "https://drive.google.com/file/d/18PZrd4P0a41Ok3P9eRlVV2Qzxg9ZOVxA/view?usp=drivesdk",
+                                        "thumbnail": "https://drive.google.com/thumbnail?id=18PZrd4P0a41Ok3P9eRlVV2Qzxg9ZOVxA&sz=s400",
+                                        "created": "2026-04-04T09:10:01",
+                                        "direct_url": "https://drive.google.com/uc?export=view&id=18PZrd4P0a41Ok3P9eRlVV2Qzxg9ZOVxA"
+                                }
+                        ]
+                },
+                {
+                        "date": "2026-04-01",
+                        "folder_id": "1oAc5XGor6v4E43m1pkYoFNjgOMRMxKKD",
+                        "count": 3,
+                        "images": [
+                                {
+                                        "name": "2026-04-03_vis_taifex_1900.png",
+                                        "url": "https://drive.google.com/file/d/1es6mRpXvHvz3AnFtbGbYOpREYi4rLpEO/view?usp=drivesdk",
+                                        "thumbnail": "https://drive.google.com/thumbnail?id=1es6mRpXvHvz3AnFtbGbYOpREYi4rLpEO&sz=s400",
+                                        "created": "2026-04-03T10:38:21",
+                                        "direct_url": "https://drive.google.com/uc?export=view&id=1es6mRpXvHvz3AnFtbGbYOpREYi4rLpEO"
+                                },
+                                {
+                                        "name": "2026-04-03_banker_open_1200.png",
+                                        "url": "https://drive.google.com/file/d/140Zv11bqy0eBOCBzAvIPlOmJkRduWaH5/view?usp=drivesdk",
+                                        "thumbnail": "https://drive.google.com/thumbnail?id=140Zv11bqy0eBOCBzAvIPlOmJkRduWaH5&sz=s400",
+                                        "created": "2026-04-03T09:33:33",
+                                        "direct_url": "https://drive.google.com/uc?export=view&id=140Zv11bqy0eBOCBzAvIPlOmJkRduWaH5"
+                                },
+                                {
+                                        "name": "2026-04-03_banker_net_1200.png",
+                                        "url": "https://drive.google.com/file/d/1NslyfzjPowtqIv16X56ohJO8KbJftTbK/view?usp=drivesdk",
+                                        "thumbnail": "https://drive.google.com/thumbnail?id=1NslyfzjPowtqIv16X56ohJO8KbJftTbK&sz=s400",
+                                        "created": "2026-04-03T09:33:31",
+                                        "direct_url": "https://drive.google.com/uc?export=view&id=1NslyfzjPowtqIv16X56ohJO8KbJftTbK"
+                                }
+                        ]
+                },
+                {
+                        "date": "2026-03-31",
+                        "folder_id": "1r2JNR9kx_7UttknEKzZ9YTpAxZF-zmlA",
+                        "count": 6,
+                        "images": [
+                                {
+                                        "name": "vis_taifex_final.png",
+                                        "url": "https://drive.google.com/file/d/1U8kwy9KGOzSBi2gqgqvQgt4NvrVPk8QT/view?usp=drivesdk",
+                                        "thumbnail": "https://drive.google.com/thumbnail?id=1U8kwy9KGOzSBi2gqgqvQgt4NvrVPk8QT&sz=s400",
+                                        "created": "2026-04-01T12:22:03",
+                                        "direct_url": "https://drive.google.com/uc?export=view&id=1U8kwy9KGOzSBi2gqgqvQgt4NvrVPk8QT"
+                                },
+                                {
+                                        "name": "vis_2500.png",
+                                        "url": "https://drive.google.com/file/d/1Q7q4NLrAPHXf5Qh1KcSS5j-zUPaWEdcz/view?usp=drivesdk",
+                                        "thumbnail": "https://drive.google.com/thumbnail?id=1Q7q4NLrAPHXf5Qh1KcSS5j-zUPaWEdcz&sz=s400",
+                                        "created": "2026-04-01T12:19:38",
+                                        "direct_url": "https://drive.google.com/uc?export=view&id=1Q7q4NLrAPHXf5Qh1KcSS5j-zUPaWEdcz"
+                                },
+                                {
+                                        "name": "vis_updated_2500.png",
+                                        "url": "https://drive.google.com/file/d/1lwprGTNH17-IG5ZOytFG2BkxeDrgDpFz/view?usp=drivesdk",
+                                        "thumbnail": "https://drive.google.com/thumbnail?id=1lwprGTNH17-IG5ZOytFG2BkxeDrgDpFz&sz=s400",
+                                        "created": "2026-04-01T12:03:09",
+                                        "direct_url": "https://drive.google.com/uc?export=view&id=1lwprGTNH17-IG5ZOytFG2BkxeDrgDpFz"
+                                },
+                                {
+                                        "name": "vis_updated_1900.png",
+                                        "url": "https://drive.google.com/file/d/1zOh6dxsFAiPfGmzeOR_5howj7p8Wydeb/view?usp=drivesdk",
+                                        "thumbnail": "https://drive.google.com/thumbnail?id=1zOh6dxsFAiPfGmzeOR_5howj7p8Wydeb&sz=s400",
+                                        "created": "2026-04-01T11:56:50",
+                                        "direct_url": "https://drive.google.com/uc?export=view&id=1zOh6dxsFAiPfGmzeOR_5howj7p8Wydeb"
+                                },
+                                {
+                                        "name": "banker_open_1200.png",
+                                        "url": "https://drive.google.com/file/d/1PPQvj9PKT6iCTdreqElHu_xbyCxUlTHI/view?usp=drivesdk",
+                                        "thumbnail": "https://drive.google.com/thumbnail?id=1PPQvj9PKT6iCTdreqElHu_xbyCxUlTHI&sz=s400",
+                                        "created": "2026-04-01T10:07:44",
+                                        "direct_url": "https://drive.google.com/uc?export=view&id=1PPQvj9PKT6iCTdreqElHu_xbyCxUlTHI"
+                                },
+                                {
+                                        "name": "banker_net_1200.png",
+                                        "url": "https://drive.google.com/file/d/1TpccJHYsqSsG-5sQoEi7vNI-AzXISrL0/view?usp=drivesdk",
+                                        "thumbnail": "https://drive.google.com/thumbnail?id=1TpccJHYsqSsG-5sQoEi7vNI-AzXISrL0&sz=s400",
+                                        "created": "2026-04-01T10:07:41",
+                                        "direct_url": "https://drive.google.com/uc?export=view&id=1TpccJHYsqSsG-5sQoEi7vNI-AzXISrL0"
+                                }
+                        ]
+                },
+                {
+                        "date": "2026-03-30",
+                        "folder_id": "1JkpjQRjHaW0a-YX2al7LzXIeO0olfKp7",
+                        "count": 1,
+                        "images": [
+                                {
+                                        "name": "vis_taifex_1900.png",
+                                        "url": "https://drive.google.com/file/d/1w8RpnUkhPF6VGweIyfP-6YZFz49L8gnT/view?usp=drivesdk",
+                                        "thumbnail": "https://drive.google.com/thumbnail?id=1w8RpnUkhPF6VGweIyfP-6YZFz49L8gnT&sz=s400",
+                                        "created": "2026-04-01T09:51:47",
+                                        "direct_url": "https://drive.google.com/uc?export=view&id=1w8RpnUkhPF6VGweIyfP-6YZFz49L8gnT"
+                                }
+                        ]
+                }
+        ]
+};
+        let currentImages = [];
+        let currentIndex = 0;
+        
+        // Load gallery JSON
+        function loadGalleryData() {
+            galleryData = JSON.parse(JSON.stringify(GALLERY_DATA));
+            populateDateSelector();
+            document.getElementById('update-time').textContent = new Date().toLocaleString('zh-TW');
+        }
+        
+        // Populate date selector
+        function populateDateSelector() {
+            const select = document.getElementById('gallery-date');
+            select.innerHTML = '';
+            
+            if (galleryData.dates && galleryData.dates.length > 0) {
+                galleryData.dates.forEach(dateObj => {
+                    const option = document.createElement('option');
+                    option.value = dateObj.date;
+                    option.textContent = `${dateObj.date} (${dateObj.count}張)`;
+                    select.appendChild(option);
+                });
+                
+                // Select first date
+                if (galleryData.dates.length > 0) {
+                    select.value = galleryData.dates[0].date;
+                    loadGallery();
+                }
+            } else {
+                select.innerHTML = '<option value="">無可用日期</option>';
+            }
+        }
+        
+        // Load gallery for selected date
+        function loadGallery() {
+            const dateStr = document.getElementById('gallery-date').value;
+            const grid = document.getElementById('gallery-grid');
+            const countSpan = document.getElementById('gallery-count');
+            
+            if (!dateStr) {
+                grid.innerHTML = '<div class="gallery-loading">請選擇日期</div>';
+                return;
+            }
+            
+            const dateData = galleryData.dates.find(d => d.date === dateStr);
+            
+            if (!dateData || !dateData.images || dateData.images.length === 0) {
+                grid.innerHTML = '<div class="gallery-loading">該日期無圖片</div>';
+                countSpan.textContent = '';
+                return;
+            }
+            
+            currentImages = dateData.images;
+            countSpan.textContent = `共 ${currentImages.length} 張圖片`;
+            
+            grid.innerHTML = '';
+            currentImages.forEach((img, index) => {
+                const item = document.createElement('div');
+                item.className = 'gallery-item';
+                item.onclick = () => openLightbox(index);
+                
+                if (img.thumbnail) {
+                    item.innerHTML = `<img src="${img.thumbnail}" alt="${img.name}" loading="lazy">`;
+                } else {
+                    item.innerHTML = `<div class="gallery-loading">📷</div>`;
+                }
+                
+                const nameDiv = document.createElement('div');
+                nameDiv.className = 'img-name';
+                nameDiv.textContent = img.name;
+                item.appendChild(nameDiv);
+                
+                grid.appendChild(item);
+            });
+        }
+        
+        // Refresh gallery
+        function refreshGallery() {
+            window.location.reload();
+        }
+        
+        // Lightbox functions
+        function openLightbox(index) {
+            currentIndex = index;
+            const img = currentImages[index];
+            
+            document.getElementById('lightbox-img').src = img.url || img.thumbnail;
+            document.getElementById('lightbox-info').textContent = img.name;
+            document.getElementById('lightbox').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        function navigateImage(direction) {
+            currentIndex += direction;
+            if (currentIndex < 0) currentIndex = currentImages.length - 1;
+            if (currentIndex >= currentImages.length) currentIndex = 0;
+            
+            const img = currentImages[currentIndex];
+            document.getElementById('lightbox-img').src = img.url || img.thumbnail;
+            document.getElementById('lightbox-info').textContent = img.name;
+        }
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (document.getElementById('lightbox').classList.contains('active')) {
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowLeft') navigateImage(-1);
+                if (e.key === 'ArrowRight') navigateImage(1);
+            }
+        });
+        
+        // Close lightbox on background click
+        document.getElementById('lightbox').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeLightbox();
+            }
+        });
+        
+        // Initialize
+        window.onload = function() {
+            loadGalleryData();
+        };
+    </script>
+</body>
+</html>
