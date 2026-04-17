@@ -1,4 +1,25 @@
 {
+  "2026-04-18": {
+    "count": 2,
+    "images": [
+      {
+        "id": "1pIerdWYV6zQD1okYOJlMUVuYlJZFNXG1",
+        "name": "2026-04-17_banker_open_1300.png",
+        "mimeType": "image/png",
+        "created": "2026-04-17T22:37:05",
+        "url": "https://drive.google.com/file/d/1pIerdWYV6zQD1okYOJlMUVuYlJZFNXG1/view?usp=drivesdk",
+        "thumbnail": "https://drive.google.com/thumbnail?id=1pIerdWYV6zQD1okYOJlMUVuYlJZFNXG1&sz=s400"
+      },
+      {
+        "id": "1Qyy_I0HciXsQs6RyMkOP0ZJkBmQB2nx8",
+        "name": "2026-04-17_banker_net_1300.png",
+        "mimeType": "image/png",
+        "created": "2026-04-17T22:37:02",
+        "url": "https://drive.google.com/file/d/1Qyy_I0HciXsQs6RyMkOP0ZJkBmQB2nx8/view?usp=drivesdk",
+        "thumbnail": "https://drive.google.com/thumbnail?id=1Qyy_I0HciXsQs6RyMkOP0ZJkBmQB2nx8&sz=s400"
+      }
+    ]
+  },
   "2026-04-16": {
     "count": 3,
     "images": [
