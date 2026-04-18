@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>🌙 DataHub - 曦曦的資料視覺化中心</title>
-    <meta name="description" content="曦曦的資料視覺化中心：整合 Looker Studio、新聞雷達、曦曦圖庫">
+    <meta name="description" content="曦曦的資料視覺化中心:整合 Looker Studio、新聞雷達、曦曦圖庫">
     <style>
         :root {
             --bg: #020617;
@@ -264,10 +264,29 @@
 
         .card h3 {
             font-size: 1.1em;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             color: var(--primary);
         }
-
+        
+        .card p {
+            font-size: 14px;
+            color: #94a3b8;
+            margin: 8px 0;
+            line-height: 1.5;
+        }
+        
+        .card .stats {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 10px 0;
+        }
+        
+        .card .subtext {
+            font-size: 12px;
+            color: #64748b;
+        }
+        
         .card-btn {
             display: inline-flex;
             align-items: center;
@@ -281,9 +300,14 @@
             color: #0b1120;
             text-decoration: none;
             transition: all var(--transition-normal);
-            margin-top: 15px;
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
         }
-
+        
+        .card { position: relative; padding-bottom: 60px; }
+        
         .card-btn:hover {
             filter: brightness(1.05);
             transform: translateY(-1px);
@@ -503,10 +527,10 @@
                     <hr style="border: none; border-top: 1px solid rgba(31, 41, 55, 0.95); margin: 12px 0 18px;">
                     <div class="hero">
                         <div>
-                            <div class="hero-title">一個入口，掌握所有數據</div>
+                            <div class="hero-title">一個入口,掌握所有數據</div>
                             <p class="hero-subtitle">
                                 整合 Looker Studio 報告、新聞雷達、曦曦圖庫於一體。
-                                自動化更新，随時查看。
+                                自動化更新,随時查看。
                             </p>
                             <div class="hero-badges">
                                 <div class="badge"><span class="badge-dot"></span>2 個數據報告</div>
@@ -561,8 +585,8 @@
                         <div class="card">
                             <h3>📰 新聞雷達</h3>
                             <p>聚合全球資訊，洞察市場趨勢</p>
-                            <div class="news-count">550+</div>
-                            <p>涵蓋 AI、金融、科技、國際等六大領域</p>
+                            <div class="stats">550+</div>
+                            <p class="subtext">涵蓋 AI、金融、科技、國際等六大領域</p>
                             <a href="https://tree25857-xi.github.io/news-radar/" target="_blank" class="card-btn">
                                 前往 NewsRadar
                             </a>
@@ -570,6 +594,7 @@
                         <div class="card">
                             <h3>💹 金融即時報價儀表板</h3>
                             <p>即時追蹤美股、期貨、加密貨幣與外匯走勢</p>
+                            <p class="subtext">涵蓋道琼斯、纳斯达克、原油、黄金、比特帊、外匯</p>
                             <a href="https://sites.google.com/view/pfort/%E5%95%86%E5%93%81%E5%8D%B3%E6%99%82%E5%83%B9%E6%A0%BC" target="_blank" class="card-btn">
                                 📊 開啟報價儀表板
                             </a>
@@ -1082,7 +1107,7 @@
         let currentImages = [];
         let currentIndex = 0;
 
-        
+
 
         function loadGalleryData() {
             populateDateSelector();
@@ -1092,7 +1117,7 @@
         function populateDateSelector() {
             const select = document.getElementById('gallery-date');
             select.innerHTML = '';
-            
+
             if (galleryData.dates && galleryData.dates.length > 0) {
                 galleryData.dates.forEach(function(dateObj) {
                     const option = document.createElement('option');
@@ -1100,7 +1125,7 @@
                     option.textContent = dateObj.date + ' (' + dateObj.count + '張)';
                     select.appendChild(option);
                 });
-                
+
                 if (galleryData.dates.length > 0) {
                     select.value = galleryData.dates[0].date;
                     loadGallery();
@@ -1114,40 +1139,40 @@
             const dateStr = document.getElementById('gallery-date').value;
             const grid = document.getElementById('gallery-grid');
             const countSpan = document.getElementById('gallery-count');
-            
+
             if (!dateStr) {
                 grid.innerHTML = '<div class="gallery-loading">請選擇日期</div>';
                 return;
             }
-            
+
             const dateData = galleryData.dates.find(function(d) { return d.date === dateStr; });
-            
+
             if (!dateData || !dateData.images || dateData.images.length === 0) {
                 grid.innerHTML = '<div class="gallery-loading">該日期無圖片</div>';
                 countSpan.textContent = '';
                 return;
             }
-            
+
             currentImages = dateData.images;
             countSpan.textContent = '共 ' + currentImages.length + ' 張圖片';
-            
+
             grid.innerHTML = '';
             currentImages.forEach(function(img, index) {
                 const item = document.createElement('div');
                 item.className = 'gallery-item';
                 item.onclick = function() { openLightbox(index); };
-                
+
                 if (img.thumbnail) {
                     item.innerHTML = '<img src="' + img.thumbnail + '" alt="' + img.name + '" loading="lazy">';
                 } else {
                     item.innerHTML = '<div class="gallery-loading">📷</div>';
                 }
-                
+
                 const nameDiv = document.createElement('div');
                 nameDiv.className = 'img-name';
                 nameDiv.textContent = img.name;
                 item.appendChild(nameDiv);
-                
+
                 grid.appendChild(item);
             });
         }
