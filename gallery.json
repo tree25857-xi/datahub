@@ -1,6 +1,59 @@
 {
-  "2026-05-27": {
+  "2026-05-28": {
     "count": 6,
+    "images": [
+      {
+        "id": "13FQ7gLQVrZPhiW01W-S0RCIkrw5d_TnG",
+        "name": "2026-05-28_datastudio_2000.png",
+        "mimeType": "image/png",
+        "created": "2026-05-28T09:01:27",
+        "url": "https://drive.google.com/file/d/13FQ7gLQVrZPhiW01W-S0RCIkrw5d_TnG/view?usp=drivesdk",
+        "thumbnail": "https://drive.google.com/thumbnail?id=13FQ7gLQVrZPhiW01W-S0RCIkrw5d_TnG&sz=s400"
+      },
+      {
+        "id": "1AoEvd02GjEdsBzJE0RchDFjP4jhVpV9p",
+        "name": "2026-05-28_banker_open_1300.png",
+        "mimeType": "image/png",
+        "created": "2026-05-28T09:01:25",
+        "url": "https://drive.google.com/file/d/1AoEvd02GjEdsBzJE0RchDFjP4jhVpV9p/view?usp=drivesdk",
+        "thumbnail": "https://drive.google.com/thumbnail?id=1AoEvd02GjEdsBzJE0RchDFjP4jhVpV9p&sz=s400"
+      },
+      {
+        "id": "17RQV4wnrl829MGTqmhrDT8u7vfrWMR3Y",
+        "name": "2026-05-28_banker_net_1300.png",
+        "mimeType": "image/png",
+        "created": "2026-05-28T09:01:23",
+        "url": "https://drive.google.com/file/d/17RQV4wnrl829MGTqmhrDT8u7vfrWMR3Y/view?usp=drivesdk",
+        "thumbnail": "https://drive.google.com/thumbnail?id=17RQV4wnrl829MGTqmhrDT8u7vfrWMR3Y&sz=s400"
+      },
+      {
+        "id": "1oYXGyZTdEvd66aYmTBkVwLpgWE97dZwG",
+        "name": "2026-05-28_datastudio_2000.png",
+        "mimeType": "image/png",
+        "created": "2026-05-28T09:01:19",
+        "url": "https://drive.google.com/file/d/1oYXGyZTdEvd66aYmTBkVwLpgWE97dZwG/view?usp=drivesdk",
+        "thumbnail": "https://drive.google.com/thumbnail?id=1oYXGyZTdEvd66aYmTBkVwLpgWE97dZwG&sz=s400"
+      },
+      {
+        "id": "1iGbqM61Zf-qXDdza8bdN--vXQK9uZTJS",
+        "name": "2026-05-28_banker_open_1300.png",
+        "mimeType": "image/png",
+        "created": "2026-05-28T09:01:16",
+        "url": "https://drive.google.com/file/d/1iGbqM61Zf-qXDdza8bdN--vXQK9uZTJS/view?usp=drivesdk",
+        "thumbnail": "https://drive.google.com/thumbnail?id=1iGbqM61Zf-qXDdza8bdN--vXQK9uZTJS&sz=s400"
+      },
+      {
+        "id": "1-4M1FYUT5LnqX0Y1RXCv9bUz_FMyBylS",
+        "name": "2026-05-28_banker_net_1300.png",
+        "mimeType": "image/png",
+        "created": "2026-05-28T09:01:14",
+        "url": "https://drive.google.com/file/d/1-4M1FYUT5LnqX0Y1RXCv9bUz_FMyBylS/view?usp=drivesdk",
+        "thumbnail": "https://drive.google.com/thumbnail?id=1-4M1FYUT5LnqX0Y1RXCv9bUz_FMyBylS&sz=s400"
+      }
+    ]
+  },
+  "2026-05-27": {
+    "count": 3,
     "images": [
       {
         "id": "1L2Cu4o31Y4MfCzRFEiblcF_JEdQx32dx",
@@ -17,30 +70,6 @@
         "created": "2026-05-27T09:01:27",
         "url": "https://drive.google.com/file/d/1dKoAfNzV0Sgt86Mox6D5FhyntG1fxhEg/view?usp=drivesdk",
         "thumbnail": "https://drive.google.com/thumbnail?id=1dKoAfNzV0Sgt86Mox6D5FhyntG1fxhEg&sz=s400"
-      },
-      {
-        "id": "1NbQ4dCY5jv5FBeKRFj9z58U13Wr0UNEq",
-        "name": "2026-05-27_banker_net_1300.png",
-        "mimeType": "image/png",
-        "created": "2026-05-27T09:01:25",
-        "url": "https://drive.google.com/file/d/1NbQ4dCY5jv5FBeKRFj9z58U13Wr0UNEq/view?usp=drivesdk",
-        "thumbnail": "https://drive.google.com/thumbnail?id=1NbQ4dCY5jv5FBeKRFj9z58U13Wr0UNEq&sz=s400"
-      },
-      {
-        "id": "1F1TfvHhkMMT-TNZ2EP950XpwIClLPv4d",
-        "name": "2026-05-27_datastudio_2000.png",
-        "mimeType": "image/png",
-        "created": "2026-05-27T09:01:18",
-        "url": "https://drive.google.com/file/d/1F1TfvHhkMMT-TNZ2EP950XpwIClLPv4d/view?usp=drivesdk",
-        "thumbnail": "https://drive.google.com/thumbnail?id=1F1TfvHhkMMT-TNZ2EP950XpwIClLPv4d&sz=s400"
-      },
-      {
-        "id": "1EqSrwXamKI_8FSrm6_xyJL2xjB6lQFpO",
-        "name": "2026-05-27_banker_open_1300.png",
-        "mimeType": "image/png",
-        "created": "2026-05-27T09:01:16",
-        "url": "https://drive.google.com/file/d/1EqSrwXamKI_8FSrm6_xyJL2xjB6lQFpO/view?usp=drivesdk",
-        "thumbnail": "https://drive.google.com/thumbnail?id=1EqSrwXamKI_8FSrm6_xyJL2xjB6lQFpO&sz=s400"
       },
       {
         "id": "1apCdm9ojD3CKVMc2rfMpUOumCe5K03zd",
