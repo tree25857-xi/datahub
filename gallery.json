@@ -1,4 +1,33 @@
 {
+  "2026-07-20": {
+    "count": 3,
+    "images": [
+      {
+        "id": "1KfhFahnvtXx738EmuZyrP6kkrc5ykU1M",
+        "name": "2026-07-20_datastudio_2000.png",
+        "mimeType": "image/png",
+        "created": "2026-07-20T09:01:17",
+        "url": "https://drive.google.com/file/d/1KfhFahnvtXx738EmuZyrP6kkrc5ykU1M/view?usp=drivesdk",
+        "thumbnail": "https://drive.google.com/thumbnail?id=1KfhFahnvtXx738EmuZyrP6kkrc5ykU1M&sz=s400"
+      },
+      {
+        "id": "1vSLkCnfojbiWWq0oJziyP-er7ozw4Yt7",
+        "name": "2026-07-20_banker_open_1300.png",
+        "mimeType": "image/png",
+        "created": "2026-07-20T09:01:14",
+        "url": "https://drive.google.com/file/d/1vSLkCnfojbiWWq0oJziyP-er7ozw4Yt7/view?usp=drivesdk",
+        "thumbnail": "https://drive.google.com/thumbnail?id=1vSLkCnfojbiWWq0oJziyP-er7ozw4Yt7&sz=s400"
+      },
+      {
+        "id": "1nfjocQvhaY1zqQsQygImTtsVk0unI15F",
+        "name": "2026-07-20_banker_net_1300.png",
+        "mimeType": "image/png",
+        "created": "2026-07-20T09:01:12",
+        "url": "https://drive.google.com/file/d/1nfjocQvhaY1zqQsQygImTtsVk0unI15F/view?usp=drivesdk",
+        "thumbnail": "https://drive.google.com/thumbnail?id=1nfjocQvhaY1zqQsQygImTtsVk0unI15F&sz=s400"
+      }
+    ]
+  },
   "2026-07-17": {
     "count": 3,
     "images": [
