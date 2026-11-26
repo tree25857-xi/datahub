@@ -17,11 +17,14 @@ log() { echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1" | tee -a "$LOGFILE"; }
 
 cd "$HUB_DIR" || { log "❌ 目錄不存在：$HUB_DIR"; exit 1; }
 
-# ── 憑證前置檢查：沒有 service_account.json 就直接失敗，不要假裝成功 ──
+# ── 憑證前置檢查 ──
+# ⚠️ 缺 service_account.json 是「長期待辦」不是「突發故障」→ 記錄狀態後 exit 0，
+#    否則每 6 小時失敗一次，累積 10 次 OpenClaw 會自動停用這個 job。
+#    告警交給 scripts/news-site-watch.sh 單一路徑處理。
 if [ ! -f "service_account.json" ]; then
-  log "❌ 缺少 service_account.json（Google Drive service account）"
-  echo "error missing-credentials $(date -u +%FT%TZ)" > "$STATUSFILE"
-  exit 1
+  log "⏭️ 缺少 service_account.json → 略過（告警由 news-site-watch.sh 處理）"
+  echo "skip missing-credentials $(date -u +%FT%TZ)" > "$STATUSFILE"
+  exit 0
 fi
 
 log "📁 更新 gallery.json（Google Drive）…"
