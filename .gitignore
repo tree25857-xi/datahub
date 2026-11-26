@@ -1,2 +1,15 @@
+# 憑證（絕不可進版控）
 service_account.json
-service_account.json
+*.json.key
+.env
+credentials.json
+
+# 本機 Python 環境
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# 本機執行產物
+*.log
